@@ -1,10 +1,19 @@
-import fastify from 'fastify';
-const server = fastify()
+import Fastify from "fastify";
 
-server.register(require('fastify-autoroutes'), {
-  dir: '../modules/user/routes', // relative to your cwd
-  prefix: '/api/users'
-})
+import { client } from "./db";
+import { UserService } from "./user/service";
+import { UserController } from "./user/controller";
+
+const server = Fastify();
+
+const userService = new UserService();
+
+
+const userController = new UserController(userService);
+
+server.get("/", userController.getUsers);
+server.get("/create", userController.createUser);
+server.get("/delete", userController.deleteUser);
 
 server.listen({ port: 4000 }, (err, address) => {
   if (err) {
@@ -13,3 +22,4 @@ server.listen({ port: 4000 }, (err, address) => {
   }
   console.log(`Server listening at ${address}`);
 })
+
