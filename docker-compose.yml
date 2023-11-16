@@ -15,4 +15,3 @@ services:
       - CASSANDRA_SEEDS=cassandra1,cassandra2
     ports:
       - "9043:9042"
-w
