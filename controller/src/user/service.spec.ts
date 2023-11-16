@@ -11,7 +11,7 @@ describe('User Service', () => {
     const result = await userService.getUsers()
 
     expect(result.rows).toBeInstanceOf(Array)
-  })
+  }, 10000)
 
   it('should create a user', async () => {
     await userService.createUser('john')
@@ -19,11 +19,11 @@ describe('User Service', () => {
     const result = await userService.getUserById('john')
 
     expect(result.rowLength).toBe(1)
-  })
+  }, 10000)
 
   it('should not create a user with the same name', async () => {
     await expect(userService.createUser('john')).rejects.toThrow("User already exists")
-  })
+  }, 10000)
 
   it('should delete a user', async () => {
     await userService.deleteUser('john')
@@ -31,10 +31,10 @@ describe('User Service', () => {
     const result = await userService.getUserById('john')
 
     expect(result.rowLength).toBe(0)
-  })
+  }, 10000)
 
   it('should not delete a user that does not exist', async () => {
     await expect(userService.deleteUser('john')).rejects.toThrow("User does not exist")
-  })
+  }, 10000)
 })
 

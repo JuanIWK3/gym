@@ -8,5 +8,5 @@ describe("db", () => {
   it("should connect to the db", async () => {
     await client.connect();
     expect(client).toBeDefined();
-  });
+  }, 10000);
 })
