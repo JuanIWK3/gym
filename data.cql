@@ -1,5 +1,5 @@
 -- Create a keyspace
-CREATE KEYSPACE IF NOT EXISTS store WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '2' };
+CREATE KEYSPACE IF NOT EXISTS gym WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '2' };
 
 -- Create a table
 CREATE TABLE IF NOT EXISTS gym.user (
