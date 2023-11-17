@@ -14,7 +14,7 @@ export class UserController {
   getUsers = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const response = await this.userService.getUsers()
-      reply.send(response)
+      reply.send(response.rows)
     } catch (error: any) {
       reply.send({ error: error.message })
     }
@@ -22,9 +22,13 @@ export class UserController {
 
   getUserByName = async (request: MyRequest, reply: FastifyReply) => {
     const name = request.params.name
+
     try {
       const response = await this.userService.getUserByName(name)
-      reply.send(response)
+      if (response.rowLength === 0) {
+        reply.send({ error: "User does not exist" })
+      }
+      reply.send(response.rows[0])
     } catch (error: any) {
       reply.send({ error: error.message })
     }
@@ -36,7 +40,8 @@ export class UserController {
 
 
     try {
-      return await this.userService.createUser(name)
+      await this.userService.createUser(name)
+      reply.send({ message: "User created" })
     } catch (error: any) {
       return reply.send({ error: error.message })
     }
@@ -46,7 +51,8 @@ export class UserController {
     const id = request.params.id
 
     try {
-      return await this.userService.deleteUser(id)
+      await this.userService.deleteUser(id)
+      reply.send({ message: "User deleted" })
     } catch (error: any) {
       return reply.send({ error: error.message })
     }

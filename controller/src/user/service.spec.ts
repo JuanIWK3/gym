@@ -1,12 +1,14 @@
 import { types } from "cassandra-driver";
 import { UserService } from "./service"
+import { client } from "../db";
 
 describe('User Service', () => {
     let userService: UserService
     let createdUser: types.Row;
 
-    beforeAll(() => {
+    beforeAll(async () => {
         userService = new UserService()
+        await client.execute('TRUNCATE gym.user')
     })
 
     it('should get users', async () => {
@@ -40,5 +42,26 @@ describe('User Service', () => {
     it('should not delete a user that does not exist', async () => {
         await expect(userService.deleteUser('8602a343-6274-41f5-a0fa-04752b3788f5')).rejects.toThrow("User does not exist")
     }, 10000)
+
+    it('should add an entrance', async () => {
+        await userService.createUser('john')
+
+        const user = await userService.getUserByName('john')
+
+        await userService.addEntrance(user.rows[0].get('id').toString())
+
+        const result = await userService.getUserByName('john')
+
+        expect(result.rows[0].get('entrances')).toHaveLength(1)
+
+        console.log(result.rows[0].get('entrances'));
+
+
+        await userService.deleteUser(result.rows[0].get('id'))
+    })
+
+    it('should not add an entrance to a user that does not exist', async () => {
+        await expect(userService.addEntrance('8602a343-6274-41f5-a0fa-04752b3788f5')).rejects.toThrow("User does not exist")
+    })
 })
 

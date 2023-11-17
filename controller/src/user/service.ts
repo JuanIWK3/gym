@@ -18,8 +18,6 @@ export class UserService {
   async createUser(name: string) {
     const user = await this.getUserByName(name)
 
-    console.log("here");
-
     if (user.rowLength > 0) {
       throw new Error("User already exists")
     }
@@ -48,8 +46,10 @@ export class UserService {
       throw new Error("User does not exist")
     }
 
-    const query = `UPDATE gym.user SET entrances = entrances + {'${new Date().toISOString()}'} WHERE id = ?`
+    const query = `UPDATE gym.user SET entrances = entrances + {'${new Date().toISOString()}'} WHERE id = ?;`
 
-    return await client.execute(query, [id])
+    const res = await client.execute(query, [id])
+
+    return res
   }
 }

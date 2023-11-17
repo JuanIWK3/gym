@@ -8,14 +8,14 @@ CREATE TABLE IF NOT EXISTS gym.user (
   id UUID, 
   name text, 
   entrances set<text>,
-  PRIMARY KEY (id, name)
+  PRIMARY KEY (id)
 );
 
 -- Insert some data
-INSERT INTO gym.user (userid, name, entrances) VALUES (uuid(), 'juan', {});
+INSERT INTO gym.user (id, name, entrances) VALUES (uuid(), 'juan', {});
 
 -- Select data
 SELECT * FROM gym.user;
 
 -- Insert an entrance
-UPDATE gym.user SET entrances = entrances + {'2020-01-01'} WHERE userid = 8602a343-6274-41f5-a0fa-04752b3788f4;
+UPDATE gym.user SET entrances = entrances + {'2020-01-01'} WHERE id = f838d7bd-0b73-49eb-95e7-78a91efb7556;
