@@ -4,7 +4,12 @@ CREATE KEYSPACE IF NOT EXISTS gym WITH REPLICATION = { 'class' : 'SimpleStrategy
 DROP TABLE IF EXISTS gym.user;
 
 -- Create a table
-CREATE TABLE IF NOT EXISTS gym.user ( userid UUID PRIMARY KEY, name text, entrances set<text>);
+CREATE TABLE IF NOT EXISTS gym.user ( 
+  id UUID, 
+  name text, 
+  entrances set<text>,
+  PRIMARY KEY (id, name)
+);
 
 -- Insert some data
 INSERT INTO gym.user (userid, name, entrances) VALUES (uuid(), 'juan', {});

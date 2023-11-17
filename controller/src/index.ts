@@ -12,8 +12,10 @@ const userService = new UserService();
 const userController = new UserController(userService);
 
 server.get("/", userController.getUsers);
-server.get("/create", userController.createUser);
-server.get("/delete", userController.deleteUser);
+server.get("/:name", userController.getUserByName);
+server.post("/create", userController.createUser);
+server.delete("/:id", userController.deleteUser);
+server.post("/enter/:id", userController.addEntrance);
 
 server.listen({ port: 4000 }, (err, address) => {
   if (err) {

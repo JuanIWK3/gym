@@ -7,17 +7,26 @@ export class UserService {
   }
 
   async getUserById(id: string) {
-    return await client.execute(`SELECT * FROM gym.user WHERE userid = '${id}';`)
+    return await client.execute(`SELECT * FROM gym.user WHERE id = ?;`, [id])
   }
 
-  async createUser(id: string) {
-    const user = await this.getUserById(id)
+  async getUserByName(name: string) {
+    const query = `SELECT * FROM gym.user WHERE name = ? ALLOW FILTERING;`
+    return await client.execute(query, [name])
+  }
+
+  async createUser(name: string) {
+    const user = await this.getUserByName(name)
+
+    console.log("here");
 
     if (user.rowLength > 0) {
       throw new Error("User already exists")
     }
 
-    return await client.execute("INSERT INTO gym.user (userid) VALUES ('john');")
+    const query = `INSERT INTO gym.user (id, name, entrances) VALUES (uuid(), ?, {});`
+
+    return await client.execute(query, [name])
   }
 
   async deleteUser(id: string) {
@@ -27,6 +36,20 @@ export class UserService {
       throw new Error("User does not exist")
     }
 
-    return await client.execute("DELETE FROM gym.user WHERE userid = 'john';")
+    const query = `DELETE FROM gym.user WHERE id = ?;`
+
+    return await client.execute(query, [id])
+  }
+
+  async addEntrance(id: string) {
+    const user = await this.getUserById(id)
+
+    if (user.rowLength === 0) {
+      throw new Error("User does not exist")
+    }
+
+    const query = `UPDATE gym.user SET entrances = entrances + {'${new Date().toISOString()}'} WHERE id = ?`
+
+    return await client.execute(query, [id])
   }
 }
