@@ -29,7 +29,7 @@
 </script>
 
 <div>
-	<input type="text" bind:value={name} />
+	<input type="text" placeholder="User name" bind:value={name} />
 	<button on:click={addUser}>Add User</button>
 
 	<h1>Users</h1>
