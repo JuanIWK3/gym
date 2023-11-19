@@ -1,10 +1,15 @@
 import { types } from "cassandra-driver";
 import { UserService } from "./service"
 import { client } from "../db";
+import { CreateUserInput } from "../types";
 
 describe('User Service', () => {
     let userService: UserService
     let createdUser: types.Row;
+
+    const createUserInput: CreateUserInput = {
+        name: 'john'
+    }
 
     beforeAll(async () => {
         userService = new UserService()
@@ -14,13 +19,13 @@ describe('User Service', () => {
     it('should get users', async () => {
         const result = await userService.getUsers()
 
-        expect(result.rows).toBeInstanceOf(Array)
+        expect(result).toBeInstanceOf(Array)
     }, 10000)
 
     it('should create a user', async () => {
-        await userService.createUser('john')
+        await userService.createUser(createUserInput)
 
-        const result = await userService.getUserByName('john')
+        const result = await userService.getUserByName(createUserInput.name)
 
         createdUser = result.rows[0]
 
@@ -28,7 +33,7 @@ describe('User Service', () => {
     }, 10000)
 
     it('should not create a user with the same name', async () => {
-        await expect(userService.createUser('john')).rejects.toThrow("User already exists")
+        await expect(userService.createUser(createUserInput)).rejects.toThrow("User already exists")
     }, 10000)
 
     it('should delete a user', async () => {
@@ -44,13 +49,13 @@ describe('User Service', () => {
     }, 10000)
 
     it('should add an entrance', async () => {
-        await userService.createUser('john')
+        await userService.createUser(createUserInput)
 
-        const user = await userService.getUserByName('john')
+        const user = await userService.getUserByName(createUserInput.name)
 
         await userService.addEntrance(user.rows[0].get('id').toString())
 
-        const result = await userService.getUserByName('john')
+        const result = await userService.getUserByName(createUserInput.name)
 
         expect(result.rows[0].get('entrances')).toHaveLength(1)
 

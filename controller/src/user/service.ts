@@ -1,9 +1,11 @@
 import { types } from "cassandra-driver";
 import { client } from "../db";
+import { CreateUserInput } from "../types";
 
 export class UserService {
   async getUsers() {
-    return await client.execute('SELECT * FROM gym.user;')
+    const result = await client.execute('SELECT * FROM gym.user;')
+    return result.rows
   }
 
   async getUserById(id: string) {
@@ -15,8 +17,8 @@ export class UserService {
     return await client.execute(query, [name])
   }
 
-  async createUser(name: string) {
-    const user = await this.getUserByName(name)
+  async createUser(input: CreateUserInput) {
+    const user = await this.getUserByName(input.name)
 
     if (user.rowLength > 0) {
       throw new Error("User already exists")
@@ -24,7 +26,7 @@ export class UserService {
 
     const query = `INSERT INTO gym.user (id, name, entrances) VALUES (uuid(), ?, {});`
 
-    return await client.execute(query, [name])
+    return await client.execute(query, [input.name])
   }
 
   async deleteUser(id: string) {

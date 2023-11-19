@@ -1,27 +1,10 @@
-import Fastify from "fastify";
+import { createHTTPServer } from '@trpc/server/adapters/standalone';
+import { appRouter } from './trpc/router';
 
-import { client } from "./db";
-import { UserService } from "./user/service";
-import { UserController } from "./user/controller";
+const server = createHTTPServer({
+  router: appRouter,
+});
 
-const server = Fastify();
+server.listen(4000);
 
-const userService = new UserService();
-
-
-const userController = new UserController(userService);
-
-server.get("/", userController.getUsers);
-server.get("/:name", userController.getUserByName);
-server.post("/create", userController.createUser);
-server.delete("/:id", userController.deleteUser);
-server.post("/enter/:id", userController.addEntrance);
-
-server.listen({ port: 4000 }, (err, address) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-  console.log(`Server listening at ${address}`);
-})
-
+console.log('Listening on http://localhost:4000');
