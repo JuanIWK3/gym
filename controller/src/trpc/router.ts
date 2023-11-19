@@ -20,6 +20,12 @@ export const appRouter = router({
     .mutation(async ({ input }) => {
       return await userService.createUser(input)
     }),
+
+  userDelete: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      return await userService.deleteUser(input.id)
+    }),
 });
 
 // Export type router type signature,
