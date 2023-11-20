@@ -21,12 +21,6 @@
 
 		console.log(data);
 
-		// if (data.message === 'denied') {
-		// 	response = 'Access denied';
-		// } else {
-		// 	response = `Access granted to ${data.name}`;
-		// }
-
 		switch (data.message) {
 			case 'denied':
 				response = 'Access denied';
