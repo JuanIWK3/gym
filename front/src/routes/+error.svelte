@@ -7,11 +7,11 @@
 		<h1>{$page.error.message}</h1>
 	{/if}
 
-	<div>We are sorry for the inconvenience</div>
+	<div>Desculpe pelo inconveniente</div>
 
-	<p>Come back later</p>
+	<p>Por favor, tente novamente mais tarde</p>
 
-	<button on:click={() => location.reload()}>Try Again</button>
+	<button on:click={() => location.reload()}>Tentar novamente</button>
 </div>
 
 <style>

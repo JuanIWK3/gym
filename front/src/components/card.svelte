@@ -5,7 +5,7 @@
 </script>
 
 <div
-	class="shadow-lg rounded-lg p-6 w-full bg-slate-100 hover:bg-white transition-all duration-200"
+	class="shadow-lg max-w-lg rounded-lg p-6 w-full bg-slate-100 hover:bg-white transition-all duration-200"
 	transition:slide
 >
 	<div class="flex justify-between">

@@ -15,3 +15,13 @@ services:
       - CASSANDRA_SEEDS=cassandra1,cassandra2
     ports:
       - "9043:9042"
+
+  mqtt:
+    image: eclipse-mosquitto
+    container_name: mqtt
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - ./mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
