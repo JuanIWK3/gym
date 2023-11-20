@@ -21,11 +21,8 @@ client.on('message', (topic, message) => {
   console.log("Received message: ", message.toString());
 
   if (message.toString() === 'Juan') {
-    client.publish('sensor-response', 'confirmed');
-    console.log("Published message: ", 'confirmed');
-
+    client.publish('sensor-response', 'granted');
   } else {
     client.publish('sensor-response', 'denied');
-    console.log("Published message: ", 'denied');
   }
 });

@@ -10,7 +10,11 @@ export async function POST({ request }) {
 
   await client.publishAsync("sensor", name)
 
-  const res = await waitForMessage(client, "sensor-response")
 
-  return json({ message: res, name })
+  try {
+    const res = await waitForMessage(client, "sensor-response")
+    return json({ message: res, name })
+  } catch (error) {
+    return json({ message: error, name })
+  }
 }

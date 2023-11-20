@@ -19,10 +19,23 @@
 
 		const data = await res.json();
 
-		if (data.message === 'denied') {
-			response = 'Access denied';
-		} else {
-			response = `Access granted to ${data.name}`;
+		console.log(data);
+
+		// if (data.message === 'denied') {
+		// 	response = 'Access denied';
+		// } else {
+		// 	response = `Access granted to ${data.name}`;
+		// }
+
+		switch (data.message) {
+			case 'denied':
+				response = 'Access denied';
+				break;
+			case 'granted':
+				response = `Access granted to ${data.name}`;
+				break;
+			default:
+				response = 'Something went wrong';
 		}
 
 		setTimeout(() => {
