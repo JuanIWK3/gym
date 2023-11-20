@@ -10,7 +10,6 @@ export async function POST({ request }) {
 
   await client.publishAsync("sensor", name)
 
-
   try {
     const res = await waitForMessage(client, "sensor-response")
     return json({ message: res, name })
