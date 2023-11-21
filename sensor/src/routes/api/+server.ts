@@ -12,8 +12,10 @@ export async function POST({ request }) {
 
   try {
     const res = await waitForMessage(client, 'sensor-response');
+    await client.endAsync();
     return json({ message: res, name });
   } catch (error) {
+    await client.endAsync();
     return json({ message: error, name });
   }
 }

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	let name = '';
 
 	let response = '';
@@ -37,12 +39,20 @@
 		}, 2000);
 
 		name = '';
+
+		const nameInput = document.getElementById('name-input') as HTMLInputElement;
+		nameInput.focus();
 	}
+
+	onMount(() => {
+		const nameInput = document.getElementById('name-input') as HTMLInputElement;
+		nameInput.focus();
+	});
 </script>
 
 <div class="container">
 	<form>
-		<input type="text" placeholder="name" bind:value={name} />
+		<input id="name-input" type="text" placeholder="name" bind:value={name} />
 		<button on:click={post}>Post</button>
 	</form>
 	<p>{response}</p>
