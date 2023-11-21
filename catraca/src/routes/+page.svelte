@@ -36,7 +36,7 @@
 
 		setTimeout(() => {
 			response = '';
-		}, 2000);
+		}, 4000);
 
 		name = '';
 
