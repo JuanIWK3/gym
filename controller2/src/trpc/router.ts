@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { publicProcedure, router } from ".";
+import { router, publicProcedure } from ".";
 import { UserService } from "../user/service";
 
 const userService = new UserService()

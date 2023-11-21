@@ -3,7 +3,6 @@ CREATE KEYSPACE IF NOT EXISTS gym WITH REPLICATION = { 'class' : 'SimpleStrategy
 
 DROP TABLE IF EXISTS gym.user;
 
--- Create a table
 CREATE TABLE IF NOT EXISTS gym.user ( 
   id UUID, 
   name text, 

@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
-	import { userService } from '../services/index.js';
-	import { invalidate, invalidateAll } from '$app/navigation';
-	import Card from '../components/card.svelte';
+	import { invalidateAll } from '$app/navigation';
 	import Add from '../components/add.svelte';
+	import Card from '../components/card.svelte';
+	import { userService } from '../services/index.js';
 
 	export let data;
 

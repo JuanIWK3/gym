@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	export let user: any;
+	export let user: {
+		id: string;
+		name: string;
+		entrances: string[] | null;
+	};
 	export let deleteUser: (id: string) => void;
 </script>
 
@@ -21,9 +25,8 @@
 	{#if user.entrances === null}
 		<div>No entries</div>
 	{:else}
-		<p>Entries</p>
 		{#each user.entrances as entry}
-			<div>{entry}</div>
+			<div>{entry.slice(0, 10)} as {entry.slice(11, 19)}</div>
 		{/each}
 	{/if}
 </div>

@@ -7,15 +7,15 @@ const server = createHTTPServer({
   router: appRouter,
 });
 
-server.listen(4000);
+server.listen(4001);
 
-console.log('Listening on http://localhost:4000');
+console.log('Listening on http://localhost:4001');
 
 const client = mqtt.connect('mqtt://localhost:1883');
 
 client.on('connect', () => {
   console.log('Connected to MQTT broker');
-  client.subscribe('sensor-controller');
+  client.subscribe('sensor-controller2');
 });
 
 client.on('message', (topic, message) => {
