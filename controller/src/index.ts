@@ -3,6 +3,8 @@ import { appRouter } from './trpc/router';
 import mqtt from 'mqtt';
 import { UserService } from './user/service';
 
+const userService = new UserService()
+
 const server = createHTTPServer({
   router: appRouter,
 });
@@ -22,7 +24,6 @@ client.on('message', async (topic: string, message: Buffer) => {
   const msg = message.toString().trim();
   console.log("Received message: ", msg);
 
-  const userService = new UserService()
   const users = await userService.getUsers()
   const names = users.map(user => user.name)
 
