@@ -18,13 +18,17 @@ client.on('connect', () => {
   client.subscribe('sensor-controller2');
 });
 
-client.on('message', (topic, message) => {
+client.on('message', async(topic, message) => {
   console.log("Received message: ", message.toString());
 
-  if (message.toString() === 'Juan') {
+  const userService = new UserService()
+  const users = await userService.getUsers()
+  const names = users.map(user => user.name)
+
+  if (names.includes(message.toString().trim())) {
     client.publish('sensor-response', 'granted');
     const userService = new UserService()
-    userService.addEntrance('Juan')
+    userService.addEntrance(message.toString().trim())
   } else {
     client.publish('sensor-response', 'denied');
   }

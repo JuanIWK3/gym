@@ -2,6 +2,7 @@ import { client } from "../db";
 import { CreateUserInput } from "../types";
 
 export class UserService {
+ 
   async getUsers() {
     const result = await client.execute('SELECT * FROM gym.user;')
     return result.rows
