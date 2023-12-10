@@ -24,12 +24,12 @@ client.on('message', async (topic: string, message: Buffer) => {
   const msg = message.toString().trim();
   console.log("Received message: ", msg);
 
-  const users = await userService.getUsers()
+  const users = await userService.getUsers('1234')
   const names = users.map(user => user.name)
 
   if (names.includes(msg)) {
     client.publish('sensor-response', 'granted');
-    userService.addEntrance(msg)
+    await userService.addEntrance(msg, '1234')
   } else {
     client.publish('sensor-response', 'denied');
   }
