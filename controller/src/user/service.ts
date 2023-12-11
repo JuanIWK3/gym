@@ -5,16 +5,14 @@ import * as bcrypt from 'bcrypt';
 
 export class UserService {
  
-  async getUsers(pin: any) {
-    await this.verifyPin(pin);
-
+  async getUsers() {
+    
     const result = await client.execute('SELECT * FROM gym.user;')
     return result.rows
   }
 
-  async getUserById(id: string, pin: any) {
-    await this.verifyPin(pin);
-
+  async getUserById(id: string) {
+    
     return await client.execute(`SELECT * FROM gym.user WHERE id = ?;`, [id])
   }
 
@@ -42,7 +40,7 @@ export class UserService {
 
   async deleteUser(id: string, pin: any) {    
 
-    const user = await this.getUserById(id, pin)
+    const user = await this.getUserById(id)
 
     if (user.rowLength === 0) {
       throw new Error("User does not exist")

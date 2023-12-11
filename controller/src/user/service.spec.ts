@@ -19,7 +19,7 @@ describe('User Service', () => {
     })
 
     it('should get users', async () => {
-        const result = await userService.getUsers('1234')
+        const result = await userService.getUsers()
 
         expect(result).toBeInstanceOf(Array)
     }, 10000)
@@ -45,7 +45,7 @@ describe('User Service', () => {
     it('should delete a user', async () => {
         await userService.deleteUser(createdUser.get('id'), '1234')
 
-        const result = await userService.getUserById(createdUser.get('id'), '1234')
+        const result = await userService.getUserById(createdUser.get('id'))
 
         expect(result.rowLength).toBe(0)
     }, 10000)

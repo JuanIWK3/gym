@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS gym.user (
 );
 
 -- Insert some data
-INSERT INTO gym.user (id, name, entrances) VALUES (uuid(), 'juan', {});
+INSERT INTO gym.user (id, name, entrances, pin) VALUES (uuid(), 'juan', {}, '1234');
 
 -- Select data
 SELECT * FROM gym.user;
