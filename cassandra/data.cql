@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS gym.user (
   id UUID, 
   name text, 
   entrances set<text>,
+  pin text,
   PRIMARY KEY (id)
 );
 

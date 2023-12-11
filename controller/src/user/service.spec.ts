@@ -3,12 +3,14 @@ import { UserService } from "./service"
 import { client } from "../db";
 import { CreateUserInput } from "../types";
 
+import * as bcrypt from 'bcrypt';
+
 describe('User Service', () => {
     let userService: UserService
     let createdUser: types.Row;
 
     const createUserInput: CreateUserInput = {
-        name: 'john'
+        name: 'john'              
     }
 
     beforeAll(async () => {
@@ -22,12 +24,16 @@ describe('User Service', () => {
         expect(result).toBeInstanceOf(Array)
     }, 10000)
 
-    it('should create a user', async () => {
+    it('should create a user with a PIN', async () => {
         await userService.createUser(createUserInput)
 
         const result = await userService.getUserByName(createUserInput.name)
 
         createdUser = result.rows[0]
+
+        //Verify if the user has a PIN
+        const isPinValid = await bcrypt.compare('pin', createdUser.get('pin').toString());
+        expect(isPinValid).toBe(true);        
 
         expect(result.rowLength).toBe(1)
     }, 10000)

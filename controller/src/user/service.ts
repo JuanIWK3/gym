@@ -1,6 +1,8 @@
 import { client } from "../db";
 import { CreateUserInput } from "../types";
 
+import * as bcrypt from 'bcrypt';
+
 export class UserService {
  
   async getUsers() {
@@ -24,9 +26,12 @@ export class UserService {
       throw new Error("User already exists")
     }
 
-    const query = `INSERT INTO gym.user (id, name, entrances) VALUES (uuid(), ?, {});`
+    const pin = Math.floor(1000 + Math.random() * 9000).toString();
+    const hashedPin = await bcrypt.hash(pin, 10);
 
-    return await client.execute(query, [input.name])
+    const query = `INSERT INTO gym.user (id, name, entrances, pin) Values (uuid(), ?, {}, ?);`
+
+    return await client.execute(query, [input.name, hashedPin])
   }
 
   async deleteUser(id: string) {
