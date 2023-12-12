@@ -24,7 +24,7 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ name , pin})
+			body: JSON.stringify({ name, pin })
 		});
 
 		const data = await res.json();
@@ -37,6 +37,12 @@
 				break;
 			case 'granted':
 				response = `Access granted to ${data.name}`;
+				break;
+			case 'not found':
+				response = 'User not found';
+				break;
+			case 'pin incorrect':
+				response = 'Pin incorrect';
 				break;
 			default:
 				response = 'Something went wrong';

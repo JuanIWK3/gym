@@ -25,17 +25,27 @@ type Message = {
   pin: string;
 }
 
-
-client.on('message', (topic, message) => {
-  console.log("Received message: ", message.toString());
+client.on('message', async (topic: string, message: Buffer) => {
+  const msg = message.toString().trim();
+  console.log("Received message: ", msg);
 
   const parsedMessage: Message = JSON.parse(message.toString());
 
-  if (parsedMessage.name === 'Juan') {
-    client.publish('sensor-response', 'granted');
-    const userService = new UserService()
-    userService.addEntrance(parsedMessage.name, parsedMessage.pin)
+  const users = await userService.getUsers()
+  const names = users.map(user => user.name)
+
+  console.log(names);
+
+
+  if (names.includes(parsedMessage.name)) {
+    try {
+      await userService.addEntrance(parsedMessage.name, parsedMessage.pin)
+      client.publish('sensor-response', 'granted');
+    } catch (e) {
+      client.publish('sensor-response', 'pin incorrect');
+      console.log(e)
+    }
   } else {
-    client.publish('sensor-response', 'denied');
+    client.publish('sensor-response', 'not found');
   }
 });
