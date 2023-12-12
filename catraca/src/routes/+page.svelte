@@ -36,7 +36,7 @@
 				response = 'Acesso negado';
 				break;
 			case 'granted':
-				response = `{name} permitido`;
+				response = 'Acesso liberado';
 				break;
 			case 'not found':
 				response = 'Usuário não encontrado';
