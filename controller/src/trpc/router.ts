@@ -5,7 +5,7 @@ import { UserService } from "../user/service";
 const userService = new UserService()
 
 export const appRouter = router({
-  userList: publicProcedure.query(async () => {
+  userList: publicProcedure.query(async (ctx) => {
     return await userService.getUsers()
   }),
 

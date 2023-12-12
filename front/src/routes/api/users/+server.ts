@@ -1,5 +1,7 @@
+import { getTRPCClient } from '$lib'
 import { json } from '@sveltejs/kit'
-import { trpc } from '$lib'
+
+const trpc = await getTRPCClient()
 
 export async function POST({ request }) {
   const { name, pin } = await request.json()

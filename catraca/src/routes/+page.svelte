@@ -33,19 +33,19 @@
 
 		switch (data.message) {
 			case 'denied':
-				response = 'Access denied';
+				response = 'Acesso negado';
 				break;
 			case 'granted':
-				response = `Access granted to ${data.name}`;
+				response = `{name} permitido`;
 				break;
 			case 'not found':
-				response = 'User not found';
+				response = 'Usuário não encontrado';
 				break;
 			case 'pin incorrect':
-				response = 'Pin incorrect';
+				response = 'Pin incorreto';
 				break;
 			default:
-				response = 'Something went wrong';
+				response = 'Sistema indisponível';
 		}
 
 		setTimeout(() => {
