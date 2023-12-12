@@ -20,16 +20,21 @@ client.on('connect', () => {
   client.subscribe('sensor-controller');
 });
 
-client.on('message', async (topic: string, message: Buffer) => {
-  const msg = message.toString().trim();
-  console.log("Received message: ", msg);
+type Message = {
+  name: string;
+  pin: string;
+}
 
-  const users = await userService.getUsers('1234')
-  const names = users.map(user => user.name)
 
-  if (names.includes(msg)) {
+client.on('message', (topic, message) => {
+  console.log("Received message: ", message.toString());
+
+  const parsedMessage: Message = JSON.parse(message.toString());
+
+  if (parsedMessage.name === 'Juan') {
     client.publish('sensor-response', 'granted');
-    await userService.addEntrance(msg, '1234')
+    const userService = new UserService()
+    userService.addEntrance(parsedMessage.name, parsedMessage.pin)
   } else {
     client.publish('sensor-response', 'denied');
   }

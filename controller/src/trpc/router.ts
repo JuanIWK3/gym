@@ -14,7 +14,7 @@ export const appRouter = router({
   }),
 
   userCreate: publicProcedure
-    .input(z.object({ name: z.string() }))
+    .input(z.object({ name: z.string(), pin: z.string() }))
     .mutation(async ({ input }) => {
       return await userService.createUser(input)
     }),
