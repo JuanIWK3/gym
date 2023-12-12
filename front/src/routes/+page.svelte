@@ -15,12 +15,23 @@
 			invalidateAll();
 		}
 	}
+
+	async function refresh() {
+		const data = await userService.getUsers();
+
+		if (data.error) {
+			alert(data.error);
+		} else {
+			invalidateAll();
+		}
+	}
 </script>
 
 <div class="flex flex-col justify-center items-center gap-8 p-8 bg-slate-200 min-h-screen">
 	<Add />
 	{#if data.users.length}
 		<h1 class="font-bold text-xl">Users</h1>
+		<button class="bg-white px-4 py-2 rounded" on:click={refresh}>Refresh</button>
 	{:else}
 		<h1 class="font-bold text-xl">No users</h1>
 	{/if}

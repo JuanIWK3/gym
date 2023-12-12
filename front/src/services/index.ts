@@ -1,4 +1,8 @@
 export const userService = {
+  getUsers: async () => {
+    const res = await fetch('/api/users');
+    return await res.json();
+  },
 
   createUser: async (name: string, pin: string) => {
     const res = await fetch('/api/users', {

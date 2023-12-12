@@ -12,3 +12,13 @@ export async function POST({ request }) {
     return json({ error: error.message })
   }
 }
+
+export async function GET() {
+  try {
+    const res = await trpc.userList.query()
+    return json(res)
+  } catch (error: any) {
+    console.error(error)
+    return json({ error: error.message })
+  }
+}
