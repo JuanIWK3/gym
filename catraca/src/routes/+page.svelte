@@ -2,8 +2,9 @@
 	import { onMount } from 'svelte';
 
 	let name = '';
-
+	let pin = '';
 	let response = '';
+	let loading = false;
 
 	async function post() {
 		if (!name) {
@@ -11,12 +12,19 @@
 			return;
 		}
 
+		if (!pin) {
+			alert('Please enter a pin');
+			return;
+		}
+
+		loading = true;
+
 		const res = await fetch('/api', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ name })
+			body: JSON.stringify({ name , pin})
 		});
 
 		const data = await res.json();
@@ -39,6 +47,8 @@
 		}, 4000);
 
 		name = '';
+		pin = '';
+		loading = false;
 
 		const nameInput = document.getElementById('name-input') as HTMLInputElement;
 		nameInput.focus();
@@ -53,7 +63,14 @@
 <div class="container">
 	<form>
 		<input id="name-input" type="text" placeholder="name" bind:value={name} />
-		<button on:click={post}>Post</button>
+		<input type="text" placeholder="pin" bind:value={pin} />
+		<button on:click={post}>
+			{#if loading}
+				Verificando...
+			{:else}
+				Entrar
+			{/if}
+		</button>
 	</form>
 	<p>{response}</p>
 </div>

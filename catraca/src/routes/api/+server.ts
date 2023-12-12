@@ -5,12 +5,12 @@ import { waitForMessage } from '$lib';
 
 
 export async function POST({ request }) {
-  const { name } = await request.json();
-
+  const { name, pin } = await request.json();
+  
   const client = await mqtt.connectAsync('mqtt://localhost:1883');
 
   try {
-    await client.publishAsync('sensor-controller', name);
+    await client.publishAsync('sensor-controller', JSON.stringify({ name, pin }));
 
     console.log('Waiting for message on controller 1');
 
@@ -23,7 +23,7 @@ export async function POST({ request }) {
     console.log('Error on controller 1, trying controller 2');
 
     try {
-      await client.publishAsync('sensor-controller2', name);
+      await client.publishAsync('sensor-controller2', JSON.stringify({ name, pin }));
 
       console.log('Waiting for message on controller 2');
 
