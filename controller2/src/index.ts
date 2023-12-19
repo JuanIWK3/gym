@@ -17,7 +17,7 @@ const client = mqtt.connect('mqtt://localhost:1883');
 
 client.on('connect', () => {
   console.log('Connected to MQTT broker');
-  client.subscribe('sensor-controller');
+  client.subscribe('sensor-controller2');
 });
 
 type Message = {
